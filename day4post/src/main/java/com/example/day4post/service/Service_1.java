@@ -15,7 +15,6 @@ public class Service_1
 {
     @Autowired
     public Repository ab;
-    
 
     public User createnewuser(@NonNull User user)
     {
@@ -35,16 +34,24 @@ public class Service_1
         return ab.findByEmail(email);
     }
 
+    public User getById(int id){
+        return ab.findById(id).orElse(null);
+    }
 
-    public User updateUser(@NonNull String email, @RequestBody User user)
+
+    public User updateUser(@NonNull String email,@RequestBody User user)
     {
         return ab.findByEmail(email)
         .map(existingUser -> {
-        existingUser.setNumber(user.getNumber());
         existingUser.setFirstname(user.getFirstname());
         existingUser.setLastname(user.getLastname());
+        existingUser.setNumber(user.getNumber());
         existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
+        // existingUser.setPassword(user.getPassword());
+        // existingUser.setFromplace(user.getFromplace());
+        // existingUser.setToplace(user.getToplace());
+        // existingUser.setDparturedate(user.getDparturedate());
+        // existingUser.setReturndate(user.getReturndate());
         return ab.save(existingUser);
 
         }
@@ -53,9 +60,9 @@ public class Service_1
         .orElseThrow(() -> new RuntimeException("User not found with this email: "+ email));
 
     }
-    public void removeUser(@NonNull Integer number)
+    public void removeUser(@NonNull Integer Id)
     {
-        ab.deleteById(number);
+        ab.deleteById(Id);
     }
 
     

@@ -21,7 +21,7 @@ import com.example.day4post.service.Service_1;
 import lombok.NonNull;
 
 @RestController
-@RequestMapping("/api/signup")
+@RequestMapping("/api/busbook")
 public class Controller
 {
     
@@ -53,6 +53,16 @@ return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
 
 }
 
+@GetMapping("getUser/{id}")
+public ResponseEntity<User> getById(@PathVariable int id){
+    try {
+        return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+}
+
+
 @GetMapping("/getUsers")
 
 
@@ -77,14 +87,15 @@ return new ResponseEntity<>(updated, HttpStatus.OK);
 
 }
 
-@DeleteMapping("deleteUser/{number}")
+@DeleteMapping("deleteUser/{userId}")
 
 
-public ResponseEntity<Void> removeUser(@NonNull @PathVariable Integer number) {
+public ResponseEntity<Void> removeUser(@NonNull @PathVariable Integer userId) {
 
-userService.removeUser(number);
+userService.removeUser(userId);
 
 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 }
+
 }
